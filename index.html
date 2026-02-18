@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="keywords" content="RISE, Reasoning, Robotics, VLA, Autonomous Vehicles, World Model, ICML 2026, Workshop">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>RISE 2026 – Reasoning in Scalable Embodied Intelligence (RISE) </title>
+
+  <link rel="icon" href="./static/images/favicon.svg">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="stylesheet" href=".css/style.css?v=3">
+
+  <script src="js/modernizr.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+
+  <style>
+    :root {
+      --rise-bg: #020817;
+      --rise-bg-soft: #050b1f;
+      --rise-primary: #2dd4bf;
+      --rise-primary-soft: rgba(45, 212, 191, 0.12);
+      --rise-accent: #38bdf8;
+      --rise-text-main: #e5e7eb;
+      --rise-text-soft: #9ca3af;
+      --rise-radius-xl: 18px;
+      --rise-radius-full: 999px;
+      --rise-shadow-soft: 0 18px 40px rgba(15,23,42,0.45);
+      --rise-border-subtle: 1px solid rgba(148,163,253,0.18);
+      --rise-card-bg: radial-gradient(circle at top left, rgba(56,189,248,0.06), transparent),
+                        radial-gradient(circle at top right, rgba(45,212,191,0.04), transparent),
+                        #020817;
+    }
+
+    html, body {
+      scroll-behavior: smooth;
+      background-color: var(--rise-bg);
+      color: var(--rise-text-main);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", -system-ui, sans-serif;
+    }
+
+    body {
+      padding-top: 4.25rem;
+    }
+
+    a {
+      color: var(--rise-accent);
+      transition: color 0.2s ease, opacity 0.2s ease;
+    }
+
+    a:hover {
+      color: var(--rise-primary);
+      opacity: 0.92;
+    }
+
+    .navbar {
+      background: radial-gradient(circle at top, rgba(45,212,191,0.06), transparent) var(--rise-bg);
+      border-bottom: 1px solid rgba(148,163,253,0.12);
+      backdrop-filter: blur(14px);
+    }
+
+    .navbar-item,
+    .navbar-link {
+      color: var(--rise-text-soft);
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+    }
+
+    .navbar-item.is-active,
+    .navbar-item:hover,
+    .navbar-link:hover {
+      color: var(--rise-primary);
+      background: transparent;
+    }
+
+    .navbar-brand .navbar-item strong {
+      color: #f9fafb;
+      font-weight: 650;
+      letter-spacing: 0.08em;
+      font-size: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .navbar-brand span.tagline {
+      display: inline-flex;
+      align-items: center;
+      margin-left: 0.6rem;
+      padding: 0.18rem 0.7rem;
+      border-radius: var(--rise-radius-full);
+      font-size: 0.65rem;
+      color: var(--rise-primary);
+      border: 1px solid rgba(45,212,191,0.45);
+      background: rgba(15,23,42,0.95);
+      gap: 0.25rem;
+    }
+
+.hero.rise-hero {
+  position: relative;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  color: #f9fafb;
+  overflow: hidden;
+
+
+  background:
+    linear-gradient(to bottom, rgba(0,0,0,0.05), rgba(0,0,0,0.25)),
+    url("https://www.atj.com/wp-content/uploads/2024/07/Destination-Highlights-Korea1-Highlights-Seoul.jpg")
+      center/cover no-repeat;
+  background-attachment: fixed;
+}
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 0% 0%, rgba(15,23,42,0.1), transparent),
+        radial-gradient(circle at 100% 0%, rgba(15,23,42,0.24), transparent),
+        linear-gradient(to bottom, rgba(2,6,23,0.5), rgba(2,6,23,0.98));
+      mix-blend-mode: normal;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-kicker {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.35rem 0.9rem;
+      border-radius: var(--rise-radius-full);
+      border: 1px solid rgba(148,163,253,0.32);
+      background: rgba(2,6,23,0.9);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--rise-text-soft);
+      gap: 0.55rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .hero-kicker span.dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--rise-primary);
+      box-shadow: 0 0 12px rgba(45,212,191,0.95);
+    }
+
+    .hero-title {
+      font-size: clamp(2.3rem, 4vw, 3.2rem);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.35rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.1rem;
+      color: var(--rise-text-soft);
+      max-width: 40rem;
+      margin-bottom: 1.3rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      font-size: 0.78rem;
+      color: var(--rise-text-soft);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-meta span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      align-items: center;
+    }
+
+    .btn-pill {
+      border-radius: var(--rise-radius-full);
+      padding-inline: 1.4rem;
+      font-size: 0.8rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      border-width: 1px;
+      border-style: solid;
+      transition: all 0.2s ease;
+      box-shadow: 0 14px 30px rgba(15,23,42,0.35);
+    }
+
+    .btn-primary {
+      background: linear-gradient(to right, var(--rise-primary), var(--rise-accent));
+      border-color: transparent;
+      color: #020817;
+      font-weight: 640;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 20px 40px rgba(15,23,42,0.5);
+      opacity: 0.97;
+    }
+
+    .btn-ghost {
+      background: rgba(2,6,23,0.96);
+      border-color: rgba(148,163,253,0.38);
+      color: var(--rise-text-main);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--rise-primary);
+      color: var(--rise-primary);
+      transform: translateY(-1px);
+    }
+
+    .hero-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.7rem;
+      margin-top: 1.1rem;
+      font-size: 0.7rem;
+      color: var(--rise-text-soft);
+    }
+
+    .hero-badge {
+      padding: 0.3rem 0.7rem;
+      border-radius: var(--rise-radius-full);
+      border: 1px solid rgba(75,85,99,0.8);
+      background: rgba(9,9,11,0.96);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .section {
+      padding: 3.2rem 1.5rem;
+    }
+
+    .section:nth-of-type(odd) {
+      background: radial-gradient(circle at top, rgba(15,23,42,0.8), transparent) var(--rise-bg);
+    }
+
+    .section:nth-of-type(even) {
+      background: var(--rise-bg-soft);
+    }
+
+    .section .title {
+      color: #f9fafb;
+      font-weight: 640;
+      letter-spacing: 0.02em;
+      margin-bottom: 0.9rem;
+    }
+
+    .section .subtitle {
+      color: var(--rise-text-soft);
+    }
+
+    .content {
+      color: var(--rise-text-main);
+      font-size: 0.92rem;
+    }
+
+    .content p,
+    .content li {
+      color: var(--rise-text-soft);
+      line-height: 1.7;
+    }
+
+    .content ul {
+      margin-top: 0.3rem;
+    }
+
+    .sticky-anchor-nav {
+      padding: 0.75rem 0;
+      background: linear-gradient(to right, rgba(15,23,42,0.98), rgba(2,6,23,0.98));
+      border-bottom: 1px solid rgba(75,85,99,0.5);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 3.4rem;
+      z-index: 30;
+    }
+
+    .anchor-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.55rem;
+    }
+
+    .anchor-buttons .button {
+      border-radius: var(--rise-radius-full);
+      border-color: rgba(75,85,99,0.85);
+      background-color: transparent;
+      color: var(--rise-text-soft);
+      font-size: 0.72rem;
+      padding-inline: 1rem;
+      height: 2rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      box-shadow: none;
+    }
+
+    .anchor-buttons .button:hover {
+      color: var(--rise-primary);
+      border-color: var(--rise-primary);
+      background: rgba(2,6,23,0.98);
+    }
+
+    .anchor-buttons .button.is-active {
+      background: var(--rise-primary-soft);
+      color: var(--rise-primary);
+      border-color: var(--rise-primary);
+    }
+
+    .schedule-table-wrapper {
+      background: var(--rise-card-bg);
+      border-radius: var(--rise-radius-xl);
+      padding: 1.5rem;
+      box-shadow: var(--rise-shadow-soft);
+      border: var(--rise-border-subtle);
+      overflow-x: auto;
+    }
+
+    .schedule-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+    }
+
+    .schedule-table tr:nth-child(even) {
+      background-color: rgba(15,23,42,0.9);
+    }
+
+    .schedule-table tr:nth-child(odd) {
+      background-color: rgba(9,9,11,0.96);
+    }
+
+    .schedule-table th,
+    .schedule-table td {
+      padding: 0.5rem 0.75rem;
+      border-bottom: 1px solid rgba(31,41,55,0.9);
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
+    .schedule-table th {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 0.65rem;
+      color: var(--rise-text-soft);
+      background: transparent;
+      border-bottom: 1px solid rgba(75,85,99,0.9);
+    }
+
+    .schedule-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.15rem 0.6rem;
+      border-radius: var(--rise-radius-full);
+      font-size: 0.6rem;
+      border: 1px solid transparent;
+    }
+
+    .schedule-label.keynote {
+      border-color: rgba(45,212,191,0.5);
+      color: var(--rise-primary);
+      background: rgba(15,23,42,0.96);
+    }
+
+    .schedule-label.panel {
+      border-color: rgba(129,140,248,0.55);
+      color: #818cf8;
+      background: rgba(15,23,42,0.96);
+    }
+
+    .schedule-label.poster {
+      border-color: rgba(251,191,36,0.4);
+      color: #fbbf24;
+      background: rgba(24,24,27,0.98);
+    }
+
+    .schedule-label.oral {
+      border-color: rgba(56,189,248,0.5);
+      color: var(--rise-accent);
+      background: rgba(9,9,11,0.98);
+    }
+
+    .schedule-label.social {
+      border-color: rgba(236,72,153,0.5);
+      color: #fb7185;
+      background: rgba(9,9,11,0.98);
+    }
+
+    .speaker-card,
+    .organizer-card {
+      background: var(--rise-card-bg);
+      border-radius: var(--rise-radius-xl);
+      border: var(--rise-border-subtle);
+      box-shadow: var(--rise-shadow-soft);
+      transition: all 0.22s ease;
+    }
+
+    .speaker-card:hover,
+    .organizer-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 60px rgba(15,23,42,0.8);
+      border-color: var(--rise-primary);
+    }
+
+    .speaker-card img.is-rounded,
+    .organizer-card img.is-rounded {
+      width: 96px;
+      height: 96px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 2px solid rgba(148,163,253,0.4);
+      box-shadow: 0 8px 20px rgba(15,23,42,0.7);
+    }
+
+    .speaker-affiliation,
+    .organizer-affiliation {
+      font-size: 0.72rem;
+      color: var(--rise-text-soft);
+    }
+
+    .pc-members {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .pc-member {
+      padding: 0.7rem 0.8rem;
+      border-radius: var(--rise-radius-xl);
+      background: var(--rise-card-bg);
+      border: var(--rise-border-subtle);
+      box-shadow: var(--rise-shadow-soft);
+      font-size: 0.78rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.12rem;
+    }
+
+    .pc-member a {
+      font-weight: 500;
+      color: #e5e7eb;
+      font-size: 0.8rem;
+    }
+
+    .pc-member p {
+      margin: 0;
+      color: var(--rise-text-soft);
+      font-size: 0.7rem;
+    }
+
+    .awards-list li {
+      padding: 0.18rem 0;
+      font-size: 0.9rem;
+    }
+
+    .footer-hero {
+      background-color: #020817;
+      border-top: 1px solid rgba(75,85,99,0.7);
+    }
+
+    .footer-hero img {
+      border-radius: var(--rise-radius-xl);
+      box-shadow: var(--rise-shadow-soft);
+      border: 1px solid rgba(148,163,253,0.2);
+      object-fit: cover;
+    }
+
+    .footer-text {
+      margin-top: 0.75rem;
+      font-size: 0.7rem;
+      color: var(--rise-text-soft);
+    }
+
+    @media screen and (max-width: 1024px) {
+      body {
+        padding-top: 3.6rem;
+      }
+
+      .hero.rise-hero {
+        min-height: 68vh;
+        background-attachment: scroll;
+      }
+
+      .hero-title {
+        font-size: 2.1rem;
+      }
+
+      .hero-subtitle {
+        font-size: 0.98rem;
+      }
+
+      .hero-meta {
+        gap: 0.7rem;
+      }
+
+      .anchor-buttons .button {
+        font-size: 0.68rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a class="navbar-item" href="#top">
+      <strong>RISE 2026</strong>
+      <span class="tagline">
+        <i class="fa fa-microchip"></i>
+        Reasoning in Scalable Embodied Intelligence (RISE)
+      </span>
+    </a>
+
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="rise-navbar">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+
+  <div id="rise-navbar" class="navbar-menu">
+    <div class="navbar-end">
+      <a class="navbar-item" href="#introduction">Introduction</a>
+      <a class="navbar-item" href="#schedule">Schedule</a>
+      <a class="navbar-item" href="#speakers">Speakers</a>
+      <a class="navbar-item" href="#paper-track">Paper Track</a>
+      <a class="navbar-item" href="#challenge">Challenge</a>
+      <a class="navbar-item" href="#organizers">Organizers</a>
+      <a class="navbar-item" href="#pc">Program Committee</a>
+    </div>
+  </div>
+</nav>
+
+<section id="top" class="hero rise-hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-body">
+    <div class="container is-max-desktop hero-content">
+      <div class="hero-kicker">
+        <span class="dot"></span>
+        1st RISE Workshop
+        <span>In conjunction with ICML 2026</span>
+      </div>
+      <h1 class="hero-title">
+        Reasoning in Scalable Embodied Intelligence (RISE)
+      </h1>
+      <p class="hero-subtitle">
+        Unlock the potential of reasoning in embodied intelligence for advancements in scalable, human-centric robotics and autonomous systems.
+      </p>
+      <div class="hero-meta">
+        <span>
+          <i class="fa fa-calendar"></i>
+          Friday, July 10, 2026
+        </span>
+        <span>
+          <i class="fa fa-map-marker-alt"></i>
+          Seoul, South Korea
+        </span>
+        <span>
+          <i class="fa fa-university"></i>
+          In conjunction with ICML 2026
+        </span>
+      </div>
+      <div class="hero-ctas">
+        <a href="#paper-track" class="button btn-pill btn-primary">
+          <i class="fa fa-file-alt"></i>
+          Call for Papers
+        </a>
+        <a href="#challenge" class="button btn-pill btn-ghost">
+          <i class="fa fa-trophy"></i>
+          Challenge Tracks
+        </a>
+      </div>
+      <div class="hero-badge-row">
+        <div class="hero-badge">
+          <i class="fa fa-users"></i>
+          Curated keynote lineup from academia & industry
+        </div>
+        <div class="hero-badge">
+          <i class="fa fa-project-diagram"></i>
+          Focus on reasoning in embodied AI
+        </div>
+        <div class="hero-badge">
+          <i class="fa fa-shield-alt"></i>
+          Scalable, human-centric robotics and autonomous systems
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sticky-anchor-nav">
+  <div class="container is-max-desktop">
+    <div class="anchor-buttons">
+      <a href="#introduction" class="button is-small is-rounded is-light">Introduction</a>
+      <a href="#schedule" class="button is-small is-rounded is-light">Schedule</a>
+      <a href="#speakers" class="button is-small is-rounded is-light">Speakers</a>
+      <a href="#paper-track" class="button is-small is-rounded is-light">Paper Track</a>
+      <a href="#challenge" class="button is-small is-rounded is-light">Challenge</a>
+      <a href="#organizers" class="button is-small is-rounded is-light">Organizers</a>
+      <a href="#pc" class="button is-small is-rounded is-light">Program Committee</a>
+      <a href="#sponsors" class="button is-small is-rounded is-light">Sponsors</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="introduction">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Introduction</h2>
+    <p>
+      The 1st edition of the Reasoning in Scalable Embodied Intelligence (RISE) workshop at ICML 2026 focuses on 
+      the critical role of reasoning in transitioning embodied AI agents from controlled laboratories to open-world deployment in 
+      robotics, autonomous driving, and interactive physical environments.
+    </p>
+    <p>
+      While advances in robot learning have significantly improved perception and control, robust real-world performance increasingly 
+      depends on reasoning: the ability to interpret context, infer latent structure, anticipate long-horizon consequences, and adapt 
+      to previously unseen situations.Despite rapid progress, key questions remain regarding how reasoning should 
+      be represented, learned, and integrated with world models to move toward general-purpose embodied agents.
+    </p>
+    <p>
+      RISE aims to bridge traditionally separate communities (machine learning, robotics, computer vision, and autonomous systems) around 
+      the shared challenges of learning to reason in real-world environments. We emphasize learning-based reasoning grounded in perception 
+      and action, exploring multimodal foundation models, generative simulation, and reinforcement learning.
+    </p>
+    <p>
+      The workshop invites researchers and practitioners to:
+    </p>
+    <ul>
+      <li>Investigate visual, linguistic, symbolic, or latent reasoning mechanisms critical for embodied tasks. </li>
+      <li>Develop architectures and world models for dynamics, causality, and counterfactual reasoning. </li>
+      <li>Address the challenges of out-of-distribution generalization and long-tail scenarios through reasoning-aware learning. </li>
+    </ul>
+
+    <h2 class="title" style="margin-top:2rem;">Topics of Interest</h2>
+    <ul>
+      <li>Foundations of embodied reasoning: visual, language-based, symbolic, and latent mechanisms</li>
+      <li>Structured, programmatic, and chain-of-thought (CoT) reasoning grounded in physical interaction</li>
+      <li>Learning to reason from interaction via reinforcement learning, imitation learning, and planning</li>
+      <li>Reasoning for out-of-distribution (OOD) generalization and long-tail scenarios</li>
+      <li>Hierarchical, modular, and compositional architectures for embodied reasoning and control</li>
+      <li>World models for dynamics, causality, counterfactual reasoning, and policy learning</li>
+      <li>Generative models for imagination, simulation, and long-horizon planning</li>
+      <li>Vision-Language-Action (VLA) models and multimodal foundation models for embodied intelligence</li>
+      <li>Language grounding, instruction following, and task planning in real environments</li>
+      <li>Robotics and autonomous driving systems enabled by embodied reasoning</li>
+      <li>Datasets, benchmarks, evaluation protocols, and real-world deployment studies</li>
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="schedule">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Schedule (Tentative)</h2>
+    <div class="schedule-table-wrapper">
+      <table class="schedule-table">
+        <thead>
+        <tr>
+          <th style="width:130px;">Time</th>
+          <th>Session</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>08:00 – 08:10</td>
+          <td>Opening Remarks – Welcome &amp; Workshop Overview</td>
+        </tr>
+        <tr>
+          <td>08:10 – 08:50</td>
+          <td>Keynotes 1 - Prof. Hang Zhao (Tsinghua University) <span class="schedule-label keynote"><i class="fa fa-microphone"></i>Keynote</span></td>
+        </tr>
+        <tr>
+          <td>08:50 – 09:30</td>
+          <td>Keynotes 2 - Prof. Sherry Yang (NYU & DeepMind) <span class="schedule-label keynote"><i class="fa fa-microphone"></i>Keynote</span></td>
+        </tr>
+        <tr>
+          <td>09:30 – 09:50</td>
+          <td>Paper Oral Presentation I <span class="schedule-label oral"><i class="fa fa-chalkboard"></i>Oral</span></td>
+        </tr>
+          <tr>
+          <td>09:50 – 10:10</td>
+          <td>Coffee break</td>
+        </tr>
+        <tr>
+          <td>10:10 – 10:50</td>
+          <td>Keynotes 3 - Prof. Yilun Du (Harvard University) <span class="schedule-label keynote"><i class="fa fa-microphone"></i>Keynote</span></td>
+        </tr>
+        <tr>
+          <td>10:50 – 11:10</td>
+          <td>Paper Oral Presentation II <span class="schedule-label oral"><i class="fa fa-chalkboard"></i>Oral</span></td>
+        </tr>
+        <tr>
+          <td>11:00 – 12:00</td>
+          <td>Poster Session <span class="schedule-label poster"><i class="fa fa-image"></i>Posters</span></td>
+        </tr>
+        <tr>
+          <td>12:00 – 13:00</td>
+          <td>Lunch Break</td>
+        </tr>
+        <tr>
+          <td>13:00 – 14:00</td>
+          <td>nuReasoning Challenge Session: introduction, winner awards, and lessons learned <span class="schedule-label challenge"><i class="fa fa-microphone"></i>Challenge</span></td>
+        </tr>
+        <tr>
+          <td>14:00 – 14:40</td>
+          <td>Keynotes 4 - Prof. Chelsea Finn (Stanford University) <span class="schedule-label keynote"><i class="fa fa-microphone"></i>Keynote</span></td>
+        </tr>
+        <tr>
+          <td>14:40 – 15:00</td>
+          <td>Best Paper Award &amp; Oral Presentation III <span class="schedule-label oral"><i class="fa fa-chalkboard"></i>Oral</span></td>
+        </tr>
+        <tr>
+          <td>15:00 – 15:20</td>
+          <td>Coffee Break</td>
+        </tr>
+        <tr>
+          <td>15:20 – 16:00</td>
+          <td>Keynotes 5 - Prof. Serget Levine (UC Berkeley & Physical Intelligence) <span class="schedule-label keynote"><i class="fa fa-microphone"></i>Keynote</span></td>
+        </tr>
+        <tr>
+          <td>16:00 – 16:40</td>
+          <td>Panel Discussion<span class="schedule-label panel"><i class="fa fa-comments"></i>Panel</span></td>
+        </tr>
+        <tr>
+          <td>16:40 – 17:00</td>
+          <td>Closing Remarks &amp; Group Photo</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="margin-top:0.8rem;font-size:0.78rem;color:var(--rise-text-soft);">
+      Final schedule, room allocation, and speaker order will be announced closer to the workshop date.
+    </p>
+  </div>
+</section>
+
+<section class="section" id="Keynote Speakers">
+
+  <div class="container is-max-desktop content">
+    <h2 class="title" id="speakers">Confirmed Keynote Speakers</h2>
+
+    <!-- Balajee Kannan -->
+    <div class="card keynote-card">
+      <a class="keynote-link" href="https://motional.com/balajee-kannan" target="_blank">
+        <div class="keynote-inner">
+          <div class="keynote-avatar-wrap">
+            <img class="keynote-avatar"
+                 src="https://motional.com/sites/default/files/2025-07/BalajeeKannan_VPAutonomy_Motional_crop.jpg"
+                 alt="Dr. Balajee Kannan">
+          </div>
+          <div class="keynote-text">
+            <p class="keynote-name">Dr. Balajee Kannan </p>
+            <p class="keynote-affiliation">Motional</p>
+          </div>
+          <div class="keynote-logo-wrap">
+            <img class="keynote-logo"
+                 src="https://cdn.cookielaw.org/logos/8c60fe9e-585e-46b1-8f92-eba17239401e/d3e43cda-e0a4-42f2-9c04-0e1900c3f68f/894f42e4-cba8-48e4-8a15-e9c3ea937950/motional_logo_horiz_fullcolor_rgb.png"
+                 alt="Motional Logo">
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Hang Zhao -->
+    <div class="card keynote-card">
+      <a class="keynote-link"
+         href="https://hangzhaomit.github.io/"
+         target="_blank">
+        <div class="keynote-inner">
+          <div class="keynote-avatar-wrap">
+            <img class="keynote-avatar"
+                 src="https://hangzhaomit.github.io/images/profile3.jpg"
+                 alt="Prof. Hang Zhao">
+          </div>
+          <div class="keynote-text">
+            <p class="keynote-name">Prof. Hang Zhao</p>
+            <p class="keynote-affiliation">Tsinghua University</p>
+          </div>
+          <div class="keynote-logo-wrap">
+            <img class="keynote-logo"
+                 src="https://download.logo.wine/logo/Tsinghua_University/Tsinghua_University-Logo.wine.png"
+                 alt="Tsinghua University Logo">
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Sherry Yang -->
+    <div class="card keynote-card">
+      <a class="keynote-link" href="https://sherryy.github.io/" target="_blank">
+        <div class="keynote-inner">
+          <div class="keynote-avatar-wrap">
+            <img class="keynote-avatar"
+                 src="https://sherryy.github.io/imgs/sherry.jpeg"
+                 alt="Prof. Sherry Yang">
+          </div>
+          <div class="keynote-text">
+            <p class="keynote-name">Prof. Sherry Yang</p>
+            <p class="keynote-affiliation">NYU &amp; DeepMind</p>
+          </div>
+          <div class="keynote-logo-wrap">
+            <img class="keynote-logo"
+                 src="https://logos-world.net/wp-content/uploads/2021/09/NYU-Logo.png"
+                 alt="NYU & DeepMind Logo">
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Yilun Du -->
+    <div class="card keynote-card">
+      <a class="keynote-link" href="https://yilundu.github.io/" target="_blank">
+        <div class="keynote-inner">
+          <div class="keynote-avatar-wrap">
+            <img class="keynote-avatar"
+                 src="https://yilundu.github.io/images/yilun8.png"
+                 alt="Prof. Yilun Du">
+          </div>
+          <div class="keynote-text">
+            <p class="keynote-name">Prof. Yilun Du</p>
+            <p class="keynote-affiliation">Harvard University</p>
+          </div>
+          <div class="keynote-logo-wrap">
+            <img class="keynote-logo"
+                 src="https://upload.wikimedia.org/wikipedia/commons/2/25/Harvard_University_shield.png"
+                 alt="Harvard University Logo">
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Chelsea Finn -->
+    <div class="card keynote-card">
+      <a class="keynote-link" href="https://ai.stanford.edu/~cbfinn/" target="_blank">
+        <div class="keynote-inner">
+          <div class="keynote-avatar-wrap">
+            <img class="keynote-avatar"
+                 src="https://ai.stanford.edu/~cbfinn/_files/sail_headshot_left_facing_crop.jpg"
+                 alt="Prof. Chelsea Finn">
+          </div>
+          <div class="keynote-text">
+            <p class="keynote-name">Prof. Chelsea Finn</p>
+            <p class="keynote-affiliation">Stanford University</p>
+          </div>
+          <div class="keynote-logo-wrap">
+            <img class="keynote-logo"
+                 src="https://identity.stanford.edu/wp-content/uploads/sites/3/2020/07/block-s-right.png"
+                 alt="Stanford University Logo">
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <!-- Sergey Levine -->
+    <div class="card keynote-card">
+      <a class="keynote-link" href="https://people.eecs.berkeley.edu/~svlevine/" target="_blank">
+        <div class="keynote-inner">
+          <div class="keynote-avatar-wrap">
+            <img class="keynote-avatar"
+                 src="https://people.eecs.berkeley.edu/~svlevine/images/portrait_lab_small.png"
+                 alt="Prof. Sergey Levine">
+          </div>
+          <div class="keynote-text">
+            <p class="keynote-name">Prof. Sergey Levine</p>
+            <p class="keynote-affiliation">UC Berkeley & Physical Intelligence</p>
+          </div>
+          <div class="keynote-logo-wrap">
+            <img class="keynote-logo"
+                 src="https://upload.wikimedia.org/wikipedia/commons/a/a1/Seal_of_University_of_California%2C_Berkeley.svg"
+                 alt="UC Berkeley Logo">
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+</section>
+
+<section class="section" id="paper-track">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Paper Track</h2>
+    <p>
+      RISE 2026 invites high-quality contributions on reasoning in embodied intelligence, and related topics outlined above.
+    </p>
+    <a class="button is-link"
+      href="#"
+      target="_blank">
+      Submit Now
+    </a>
+
+    <ul>
+      <li><b>Paper Type</b>: 4-page extended abstracts or 8-10 page versions of recently published work</li>
+      <li><b>Included in Proceedings</b>: No (non-archival)</li>
+      <li><b>Submission Deadline</b>: May 1, 2026 (23:59 PST)</li>
+      <li><b>Notification to Authors</b>: May 10, 2026</li>
+      <li><b>Camera-Ready Deadline</b>: May 20, 2026</li>
+    </ul>
+
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Paper Awards</h2>
+    <ul class="awards-list">
+      <li>🏆 Best Paper Award: $1,000</li>
+      <li>🏆 Best Paper Runner-Up Award: $500</li>
+    </ul>
+  </div>
+  <div class="container is-max-desktop content">
+    <h2 class="title">Challenge Awards</h2>
+    <ul class="awards-list">
+      <li>🏆 nuReasoning Challenge Winner Award: $10,000</li>
+      <li>🏆 nuReasoning Challenge Runner-up Award: $5,000</li>
+      <li>🏆 nuReasoning Challenge Innovation Award: $2,000</li>
+    </ul>
+  </div>
+
+</section>
+
+<section class="section" id="challenge">
+  <div class="container is-max-desktop content">
+    <h2 class="title">nuReasoning Challenge</h2>
+    <p>
+      The nuReasoning Challenge aims to develop autonomous driving agents that can robustly 
+      handle rare interactions and complex causal dependencies, going beyond average-case perception and planning.
+      This open dataset and benchmark is inspired by Motional's nuScenes and nuPlan datasets and the NAVSIM end-to-end 
+      driving benchmark, but is specifically targeted at reasoning-intensive, long-tail driving scenarios
+    </p>
+    <h3 class="subtitle">Challenge Objectives</h3>
+      <ul>
+        <li>
+          Reasoning-Centric Planning: Given sensor observations and context, agents must plan safe, human-compatible trajectories while outputting explicit reasoning signals, such as meta-actions.
+        </li>
+        <li>
+          Long-Tail Robustness: Evaluation focuses on performance during rare interactions, including foreign object debris, occlusions, and uncommon causal dependencies.
+        </li>
+        <li>
+          Human-Verified Logic: The challenge utilizes the nuReasoning Dataset, which features realistic driving logs enriched with high-quality, human-verified reasoning annotations.
+        </li>
+      </ul>
+    <!-- <h3 class="subtitle">Competition Timeline</h3>
+    <ul>
+      <li><b>Dataset & Starter Code Release</b>: April 15, 2026</li>
+      <li><b>Public Leaderboard Submissions Open</b>: April 15 – June 15, 2026</li>
+      <li><b>Rankings Freeze & Winner Notification</b>: Late June 2026</li>
+      <li><b>Workshop Presentation & Awards</b>: At ICML 2026</li>
+    </ul> -->
+    <p>
+      Top-performing submissions will be invited to present their findings at the workshop. Cash prizes will be awarded to the winners of the nuReasoning challenge. All materials, including the dataset, code, and evaluation scripts, will remain publicly available after the workshop to support continued research.
+    </p>
+  </div>
+</section>
+
+<section class="section" id="organizers">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Organizers</h2>
+
+    <div class="columns is-multiline is-centered">
+      <div class="column is-one-quarter">
+        <a href="https://mczhi.github.io/">
+          <div class="card organizer-card">
+            <div class="avatar-wrap">
+              <img class="is-rounded" src="https://mczhi.github.io/images/android-chrome-512x512.png" alt="Dr. Zhiyu Huang">
+            </div>
+            <div class="card-content">
+              <p class="title is-7">Dr. Zhiyu Huang</p>
+              <p class="organizer-affiliation">University of California, Los Angeles</p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="column is-one-quarter">
+        <a href="https://walzimmer.github.io/website/">
+          <div class="card organizer-card">
+            <div class="avatar-wrap">
+              <img class="is-rounded" src="https://avatars.githubusercontent.com/u/22540236?v=4" alt="Dr. Walter Zimmer">
+            </div>
+            <div class="card-content">
+              <p class="title is-7">Dr. Walter Zimmer</p>
+              <p class="organizer-affiliation">University of California, Los Angeles &amp; Technical University of Munich</p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="column is-one-quarter">
+        <a href="https://rruisong.github.io/">
+          <div class="card organizer-card">
+            <div class="avatar-wrap">
+              <img class="is-rounded" src="https://i1.rgstatic.net/ii/profile.image/1160239365795840-1653634029979_Q512/Rui-Song-47.jpg" alt="Dr. Rui Song">
+            </div>
+            <div class="card-content">
+              <p class="title is-7">Dr. Rui Song</p>
+              <p class="organizer-affiliation">University of California, Los Angeles &amp; University of Cambridge</p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="column is-one-quarter">
+        <a href="https://scholar.google.com/citations?user=pOA6uKMAAAAJ&hl=en">
+          <div class="card organizer-card">
+            <div class="avatar-wrap">
+              <img class="is-rounded" src="https://scholar.googleusercontent.com/citations?view_op=medium_photo&user=pOA6uKMAAAAJ&citpid=11" alt="Dr. Xuewei (Tony) Qi">
+            </div>
+            <div class="card-content">
+              <p class="title is-7">Dr. Xuewei (Tony) Qi</p>
+              <p class="organizer-affiliation">Motional</p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+    </div>
+
+    <div class="columns is-multiline is-centered">
+
+      <div class="column is-one-quarter">
+        <a href="https://scholar.google.com/citations?user=iQx57VIAAAAJ&hl=en">
+          <div class="card organizer-card">
+            <div class="avatar-wrap">
+              <img class="is-rounded" src="https://www.nuscenes.org/static/media/yiluan_guo.b0b4ecbc.jpg" alt="Yiluan Guo">
+            </div>
+            <div class="card-content">
+              <p class="title is-7">Dr. Yiluan Guo</p>
+              <p class="organizer-affiliation">Motional</p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="column is-one-quarter">
+        <a href="https://www.cs.cornell.edu/~katieluo/">
+          <div class="card organizer-card">
+            <div class="avatar-wrap">
+              <img class="is-rounded" src="https://www.cs.cornell.edu/~katieluo/authors/admin/avatar_hubcfc1ffa656df1397d1ce86163694b4f_619278_270x270_fill_q75_lanczos_center.jpg" alt="Dr. Katie Luo">
+            </div>
+            <div class="card-content">
+              <p class="title is-7">Dr. Katie Luo</p>
+              <p class="organizer-affiliation">Stanford University</p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="column is-one-quarter">
+        <a href="https://handsomeyun.github.io/">
+          <div class="card organizer-card">
+            <div class="avatar-wrap">
+              <img class="is-rounded" src="https://handsomeyun.github.io/assets/img/prof_pic-480.webp" alt="Yun Zhang">
+            </div>
+            <div class="card-content">
+              <p class="title is-7">Yun Zhang</p>
+              <p class="organizer-affiliation">University of California, Los Angeles</p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+      <div class="column is-one-quarter">
+        <a href="https://scholar.google.com/citations?user=-CA8QgwAAAAJ&hl=en">
+          <div class="card organizer-card">
+            <div class="avatar-wrap">
+              <img class="is-rounded" src="https://scholar.googleusercontent.com/citations?view_op=medium_photo&user=-CA8QgwAAAAJ&citpid=1" alt="Prof. Alois Knoll">
+            </div>
+            <div class="card-content">
+              <p class="title is-7">Prof. Alois Knoll</p>
+              <p class="organizer-affiliation">Technical University of Munich</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <div class="columns is-multiline is-centered">
+
+      <div class="column is-one-quarter">
+        <a href="https://samueli.ucla.edu/people/jiaqi-ma/">
+          <div class="card organizer-card">
+            <div class="avatar-wrap">
+              <img class="is-rounded" src="https://scholar.googleusercontent.com/citations?view_op=medium_photo&user=S3cQz1AAAAAJ&citpid=3" alt="Prof. Jiaqi Ma">
+            </div>
+            <div class="card-content">
+              <p class="title is-7">Prof. Jiaqi Ma</p>
+              <p class="organizer-affiliation">University of California, Los Angeles</p>
+            </div>
+          </div>
+        </a>
+      </div>
+
+<!-- 
+    <div class="column is-one-quarter">
+      <a href="https://zewei-zhou.github.io/">
+        <div class="card organizer-card">
+          <div class="avatar-wrap">
+            <img class="is-rounded" src="static/img/zewei_zhou.jpg" alt="Zewei Zhou">
+          </div>
+          <div class="card-content">
+            <p class="title is-7">Zewei Zhou</p>
+            <p class="organizer-affiliation">University of California, Los Angeles</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="column is-one-quarter">
+      <a href="https://www.tianhui-vicky.com/">
+        <div class="card organizer-card">
+          <div class="avatar-wrap">
+            <img class="is-rounded" src="static/img/tianhui_cai.jpg" alt="Tianhui Cai">
+          </div>
+          <div class="card-content">
+            <p class="title is-7">Tianhui Cai</p>
+            <p class="organizer-affiliation">University of California, Los Angeles</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="column is-one-quarter">
+      <a href="https://sethzhao506.github.io">
+        <div class="card organizer-card">
+          <div class="avatar-wrap">
+            <img class="is-rounded" src="https://sethzhao506.github.io/assets/img/profile_pic_2022.png" alt="Seth Z. Zhao">
+          </div>
+          <div class="card-content">
+            <p class="title is-7">Seth Z. Zhao</p>
+            <p class="organizer-affiliation">University of California, Los Angeles</p>
+          </div>
+        </div>
+      </a>
+    </div> -->
+
+  </div>
+</section>
+
+<!-- 
+
+<section class="section" id="pc">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Invited Program Committee</h2>
+    <div class="pc-members">
+      <div class="pc-member">
+        <a href="https://profiles.ucr.edu/app/home/profile/barth" target="_blank">Prof. Dr. Matthew Barth</a>
+        <p>University of California, Riverside</p>
+      </div>
+      <div class="pc-member">
+        <a href="https://see-en.tongji.edu.cn/about_Us/Departments/Sino_German_Research_Center_for_Intelligent_Scie/Contact_Us_.htm" target="_blank">Prof. Dr. Huilin Yin</a>
+        <p>Tongji University</p>
+      </div>
+      <div class="pc-member">
+        <a href="https://ziranw.github.io/" target="_blank">Prof. Dr. Ziran Wang</a>
+        <p>Purdue University</p>
+      </div>
+      <div class="pc-member">
+        <a href="https://www-lmd.ist.hokudai.ac.jp/member/guang-li/" target="_blank">Prof. Dr. Guang Li</a>
+        <p>Hokkaido University</p>
+      </div>
+      <div class="pc-member">
+        <a href="https://profiles.ucr.edu/app/home/profile/kanokb" target="_blank">Prof. Dr. Kanok Boriboonsomsin</a>
+        <p>UC Riverside</p>
+      </div>
+      <div class="pc-member">
+        <a href="https://www.cs.cit.tum.de/camp/members/senior-research-scientists/federico-tombari/" target="_blank">PD Dr. habil. Federico Tombari</a>
+        <p>Google</p>
+      </div>
+      <div class="pc-member">
+        <a href="https://hangqiu.github.io/" target="_blank">Prof. Dr. Hang Qiu</a>
+        <p>UC Riverside</p>
+      </div>
+      <div class="pc-member">
+        <a href="https://jiachenli94.github.io/" target="_blank">Prof. Dr. Jiachen Li</a>
+        <p>UC Riverside</p>
+      </div>
+      <div class="pc-member">
+        <a href="https://vztu.github.io/" target="_blank">Prof. Dr. Zhengzhong Tu</a>
+        <p>Texas A&amp;M University</p>
+      </div>
+      <div class="pc-member">
+        <a href="https://www.linkedin.com/in/christophpilz/" target="_blank">Dr. Christoph Pilz</a>
+        <p>Virtual Vehicle</p>
+      </div>
+      <div class="pc-member">
+        <a href="https://www.linkedin.com/in/markusschratter" target="_blank">Dr. Markus Schratter</a>
+        <p>Virtual Vehicle</p>
+      </div>
+      <div class="pc-member">
+        <a href="https://www.xiangbogao.com/" target="_blank">Xiangbo Gao</a>
+        <p>Texas A&amp;M University</p>
+      </div>
+      <div class="pc-member">
+        <a href="https://www.linkedin.com/in/felix-neumann-7993b0167/" target="_blank">Felix Neumann</a>
+        <p>Siemens</p>
+      </div>
+      <div class="pc-member">
+        <a href="https://online.tugraz.at/tug_online/visitenkarte.show_vcard?pPersonenId=BDB643F60C7AC4A1" target="_blank">Kenan Ahmic</a>
+        <p>Graz University of Technology</p>
+      </div>
+      <div class="pc-member">
+        <a href="https://vveicao.github.io/" target="_blank">Wei Cao</a>
+        <p>UIUC</p>
+      </div>
+      <div class="pc-member">
+        <a href="https://www.linkedin.com/in/markusgross42/" target="_blank">Markus Gross</a>
+        <p>Fraunhofer IVI &amp; TUM</p>
+      </div>
+    </div>
+  </div>
+</section> -->
+
+<section class="section" id="sponsors">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Sponsors</h2>
+    <div style="text-align: center; margin-bottom: 2rem;">
+      
+    </div>
+    
+    <!-- Sponsor Logos -->
+    <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 2rem; margin-bottom: 2rem;">
+      <div style="text-align: center;">
+        <img src="https://cdn.prod.website-files.com/679038f47d3aba15a7876e30/69446dfb433de7608bf8362d_Case-Study-Thumb-Motional.png" alt="Motional Logo" style="width: 150px; height: auto;">
+      </div>
+    </div>
+    
+    <p style="text-align: center; margin-bottom: 1.5rem;">
+      RISE 2026 welcomes sponsorship from industry, startups, and institutions interested in foundation models for
+      reasoning in embodied intelligence.
+    </p>
+    <p style="text-align: center;">
+      For sponsorship opportunities, please contact:
+      <a href="mailto:zhiyuh@ucla.edu">zhiyuh@ucla.edu</a>.
+    </p>
+  </div>
+</section>
+
+<section class="hero footer-hero-banner"></section>
+
+<section class="hero footer-hero-text">
+  <div class="hero-body">
+    <div class="container has-text-centered">
+      <p class="footer-text">
+        RISE 2026 – Reasoning in Scalable Embodied Intelligence (RISE)<br>
+        In conjunction with ICML 2026 • Seoul, South Korea • July 10, 2026
+      </p>
+    </div>
+  </div>
+</section>
+
+<style>
+
+.hero.footer-hero-text {
+  background-color: #020617;
+  margin: 0;
+  padding: 0;                 
+}
+
+
+.hero.footer-hero-text .hero-body {
+  padding-top: 0.4rem;       
+  padding-bottom: 0.9rem;     
+  padding-left: 0; 
+  padding-right: 0;
+}
+
+</style>
+
+<script src="js/jquery-2.1.1.js"></script>
+<script src="js/jquery.mobile.custom.min.js"></script>
+<script src="js/main.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var burger = document.querySelector('.navbar-burger');
+    var menu = document.getElementById('rise-navbar');
+    if (burger && menu) {
+      burger.addEventListener('click', function () {
+        burger.classList.toggle('is-active');
+        menu.classList.toggle('is-active');
+      });
+    }
+
+    var anchorButtons = document.querySelectorAll('.anchor-buttons .button');
+    anchorButtons.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        anchorButtons.forEach(function (b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
